@@ -11,8 +11,8 @@
 | **Docente** | Mtro. Luis Antonio Ramírez Martínez |
 | **Actividad** | Tarea 3. Desarrollo de servicios web con Node.js |
 | **Alumno** | Bruno Salazar |
-| **Matrícula** | [000000] |
-| **Fecha de entrega** | [dd/mm/aaaa] |
+| **Matrícula** | [385558] |
+| **Fecha de entrega** | [04/09/2026] |
 
 ## Descripción
 
@@ -43,8 +43,8 @@ Aplicar los conceptos fundamentales de administración de paquetes con NPM y exp
 ## Instalación
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
-cd <NOMBRE_DEL_REPOSITORIO>
+git clone <https://github.com/bubuzha/tarea-3-TODO-list-node.js>
+cd <tarea-3-RODO-list-node.js>
 npm install
 ```
 
@@ -157,4 +157,4 @@ todo-app/
 
 ## Autor
 
-Bruno Salazar — [Matrícula]
+Bruno Salazar — [385558]
