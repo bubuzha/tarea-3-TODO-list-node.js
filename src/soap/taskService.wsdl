@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Contrato WSDL del servicio SOAP de tareas.
+  Define: los tipos de datos (Task), los mensajes de entrada/salida,
+  las operaciones disponibles (GetTasks, AddTask), el binding SOAP
+  y la dirección (address) donde se expone el servicio.
+  Es consumido por src/soap/taskSoap.js a través de la librería "soap".
+-->
+<definitions name="TaskService"
+  targetNamespace="http://example.com/todoapp/soap"
+  xmlns:tns="http://example.com/todoapp/soap"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <!-- Definición de tipos de datos (esquema XSD) usados en las peticiones y respuestas. -->
+  <types>
+    <xsd:schema targetNamespace="http://example.com/todoapp/soap">
+      <!-- Petición de GetTasks: no recibe parámetros. -->
+      <xsd:element name="GetTasksRequest">
+        <xsd:complexType />
+      </xsd:element>
+
+      <!-- Estructura de una tarea, análoga al objeto usado en la API REST. -->
+      <xsd:complexType name="Task">
+        <xsd:sequence>
+          <xsd:element name="id" type="xsd:int" />
+          <xsd:element name="title" type="xsd:string" />
+          <xsd:element name="completed" type="xsd:boolean" />
+        </xsd:sequence>
+      </xsd:complexType>
+
+      <!-- Respuesta de GetTasks: una lista (0 o más) de tareas. -->
+      <xsd:element name="GetTasksResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="task" type="tns:Task" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- Petición de AddTask: recibe el título de la nueva tarea. -->
+      <xsd:element name="AddTaskRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="title" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <!-- Respuesta de AddTask: la tarea recién creada. -->
+      <xsd:element name="AddTaskResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="task" type="tns:Task" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <!-- Mensajes: envuelven los elementos de tipos anteriores para input/output de cada operación. -->
+  <message name="GetTasksInput">
+    <part name="parameters" element="tns:GetTasksRequest" />
+  </message>
+  <message name="GetTasksOutput">
+    <part name="parameters" element="tns:GetTasksResponse" />
+  </message>
+  <message name="AddTaskInput">
+    <part name="parameters" element="tns:AddTaskRequest" />
+  </message>
+  <message name="AddTaskOutput">
+    <part name="parameters" element="tns:AddTaskResponse" />
+  </message>
+
+  <!-- portType: interfaz abstracta con las operaciones disponibles del servicio. -->
+  <portType name="TaskServicePortType">
+    <operation name="GetTasks">
+      <input message="tns:GetTasksInput" />
+      <output message="tns:GetTasksOutput" />
+    </operation>
+    <operation name="AddTask">
+      <input message="tns:AddTaskInput" />
+      <output message="tns:AddTaskOutput" />
+    </operation>
+  </portType>
+
+  <!-- binding: indica cómo se transmiten esas operaciones sobre SOAP/HTTP (estilo "document"). -->
+  <binding name="TaskServiceBinding" type="tns:TaskServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+    <operation name="GetTasks">
+      <soap:operation soapAction="http://example.com/todoapp/soap/GetTasks" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="AddTask">
+      <soap:operation soapAction="http://example.com/todoapp/soap/AddTask" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+
+  <!-- service: expone el binding anterior en una dirección concreta (endpoint). -->
+  <service name="TaskService">
+    <port name="TaskServicePort" binding="tns:TaskServiceBinding">
+      <soap:address location="http://localhost:3000/wsdl" />
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,31 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "This app is a todo API for example class.",
+  "keywords": [
+    "todo",
+    "node",
+    "js"
+  ],
+  "license": "ISC",
+  "author": "Bruno Salazar",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "jest",
+    "dev": "supervisor src/app.js",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "log4js": "^6.9.1",
+    "soap": "^1.11.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.9.1",
+    "jest": "^30.5.0",
+    "supervisor": "^0.12.0"
+  }
+}
